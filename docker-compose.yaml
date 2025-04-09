@@ -7,6 +7,13 @@ services:
       target: bolt-ai-production
     ports:
       - '5173:5173'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bolt.rule=Host(`bolt.juliocode.com`)"
+      - "traefik.http.routers.bolt.entrypoints=websecure"
+      - "traefik.http.routers.bolt.tls=true"
+      - "traefik.http.services.bolt.loadbalancer.server.port=5173"
+
     env_file: '.env.local'
     environment:
       - NODE_ENV=production
